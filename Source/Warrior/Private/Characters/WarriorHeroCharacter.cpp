@@ -4,9 +4,13 @@
 
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "Components/Input/WarriorInputComponent.h"
+#include "DataAssets/Input/DataAsset_InputConfig.h"
+#include "EnhancedInputSubsystems.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "WarriorDebugHelper.h"
+#include "WarriorGameplayTags.h"
 
 AWarriorHeroCharacter::AWarriorHeroCharacter()
 {
@@ -31,10 +35,63 @@ AWarriorHeroCharacter::AWarriorHeroCharacter()
     GetCharacterMovement()->MaxWalkSpeed = 400.0f;
     GetCharacterMovement()->BrakingDecelerationWalking = 2000.0f;
 }
+void AWarriorHeroCharacter::SetupPlayerInputComponent(UInputComponent *PlayerInputComponent)
+{
+    checkf(InputConfigDataAsset, TEXT("Forgot to assign a valid data asset as input config"));
+
+    ULocalPlayer* LocalPlayer = GetController<APlayerController>()->GetLocalPlayer();
+    UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(LocalPlayer);
+    check(Subsystem);
+
+    Subsystem->AddMappingContext(InputConfigDataAsset->DefaultMappingContext, 0);
+
+    UWarriorInputComponent* WarriorInputComponent = CastChecked<UWarriorInputComponent>(PlayerInputComponent);
+
+    WarriorInputComponent->BindNativeInputAction(InputConfigDataAsset, WarriorGameplayTags::InputTag_Move,
+        ETriggerEvent::Triggered,this, &ThisClass::InputMove);
+    WarriorInputComponent->BindNativeInputAction(InputConfigDataAsset, WarriorGameplayTags::InputTag_Look,
+        ETriggerEvent::Triggered,this, &ThisClass::InputLook);
+}
 
 void AWarriorHeroCharacter::BeginPlay()
 {
   Super::BeginPlay();
 
   Debug::Print(TEXT("Working"));
+}
+
+void AWarriorHeroCharacter::InputMove(const FInputActionValue &InputActionValue)
+{
+    const FVector2D MovementVector = InputActionValue.Get<FVector2D>();
+
+    const FRotator MovementRotation(0.f,Controller->GetControlRotation().Yaw,0.f);
+
+    if (MovementVector.Y != 0.f)
+    {
+        const FVector ForwardDirection = MovementRotation.RotateVector(FVector::ForwardVector);
+
+        AddMovementInput(ForwardDirection, MovementVector.Y);
+    }
+
+    if (MovementVector.X != 0.f)
+    {
+        const FVector RightDirection = MovementRotation.RotateVector(FVector::RightVector);
+
+        AddMovementInput(RightDirection, MovementVector.X);
+    }
+}
+
+void AWarriorHeroCharacter::InputLook(const FInputActionValue &InputActionValue)
+{
+    const FVector2D LookAxisVector = InputActionValue.Get<FVector2D>();
+
+    if (LookAxisVector.X != 0.f)
+    {
+        AddControllerYawInput(LookAxisVector.X);
+    }
+
+    if (LookAxisVector.Y != 0.f)
+    {
+        AddControllerPitchInput(LookAxisVector.Y);
+    }
 }
