@@ -1,4 +1,4 @@
-// Warrior, Copyright 2026 – 2026, Juicy, Inc.
+// Warrior, Copyright 2026 - 2026, Juicy, Inc
 
 #include "AnimInstances/WarriorCharacterAnimInstance.h"
 #include "Characters/WarriorBaseCharacter.h"

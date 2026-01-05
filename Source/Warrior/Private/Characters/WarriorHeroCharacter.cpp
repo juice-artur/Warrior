@@ -1,11 +1,13 @@
-// Warrior, Copyright 2026 – 2026, Juicy, Inc.
+// Warrior, Copyright 2026 - 2026, Juicy, Inc
 
 #include "Characters/WarriorHeroCharacter.h"
 
+#include "AbilitySystem/WarriorAbilitySystemComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/Input/WarriorInputComponent.h"
 #include "DataAssets/Input/DataAsset_InputConfig.h"
+#include "DataAssets/StartUpData/DataAsset_StartUpDataBase.h"
 #include "EnhancedInputSubsystems.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
@@ -56,8 +58,17 @@ void AWarriorHeroCharacter::SetupPlayerInputComponent(UInputComponent *PlayerInp
 void AWarriorHeroCharacter::BeginPlay()
 {
   Super::BeginPlay();
+}
 
-  Debug::Print(TEXT("Working"));
+void AWarriorHeroCharacter::PossessedBy(AController *NewController)
+{
+    if (!CharacterStartUpData.IsNull())
+    {
+        if (UDataAsset_StartUpDataBase* LoadedData = CharacterStartUpData.LoadSynchronous())
+        {
+            LoadedData->GiveToAbilitySystemComponent(WarriorAbilitySystemComponent);
+        }
+    }
 }
 
 void AWarriorHeroCharacter::InputMove(const FInputActionValue &InputActionValue)

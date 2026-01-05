@@ -1,4 +1,4 @@
-// Warrior, Copyright 2026 – 2026, Juicy, Inc.
+// Warrior, Copyright 2026 - 2026, Juicy, Inc
 
 #pragma once
 
@@ -23,6 +23,10 @@ public:
 protected:
     virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
 	virtual void BeginPlay() override;
+
+    //~ Begin APawn Interface.
+    virtual void PossessedBy(AController* NewController) override;
+    //~ End APawn Interface
 
 private:
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))

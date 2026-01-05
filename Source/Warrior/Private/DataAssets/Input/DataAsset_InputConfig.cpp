@@ -1,4 +1,4 @@
-// Warrior, Copyright 2026 – 2026, Juicy, Inc.
+// Warrior, Copyright 2026 - 2026, Juicy, Inc
 
 #include "DataAssets/Input/DataAsset_InputConfig.h"
 
