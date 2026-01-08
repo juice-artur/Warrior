@@ -13,28 +13,37 @@ class UInputAction;
 USTRUCT(BlueprintType)
 struct FWarriorInputActionConfig
 {
-  GENERATED_BODY()
+    GENERATED_BODY()
 
 public:
-  UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (Categories = "InputTag"))
-  FGameplayTag InputTag;
+    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (Categories = "InputTag"))
+    FGameplayTag InputTag;
+    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+    UInputAction *InputAction;
 
-  UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-  UInputAction *InputAction;
+public:
+    bool IsValid() const
+    {
+        return InputTag.IsValid() && InputAction;
+    }
 };
 
 UCLASS()
 class WARRIOR_API UDataAsset_InputConfig : public UDataAsset
 {
-  GENERATED_BODY()
+    GENERATED_BODY()
 
 public:
-  UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-  UInputMappingContext *DefaultMappingContext;
+    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+    UInputMappingContext *DefaultMappingContext;
 
-  UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (TitleProperty = "InputTag"))
-  TArray<FWarriorInputActionConfig> NativeInputActions;
+    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (TitleProperty = "InputTag"))
+    TArray<FWarriorInputActionConfig> NativeInputActions;
+
+
+    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (TitleProperty = "InputTag"))
+    TArray<FWarriorInputActionConfig> AbilityInputActions;
 
 public:
-  UInputAction *FindNativeInputActionByTag(const FGameplayTag &InInputTag) const;
+    UInputAction *FindNativeInputActionByTag(const FGameplayTag &InInputTag) const;
 };

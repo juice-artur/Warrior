@@ -2,7 +2,9 @@
 
 #include "AbilitySystem/Abilities/WarriorGameplayAbility.h"
 
+#include "AbilitySystem/WarriorAbilitySystemComponent.h"
 #include "AbilitySystemComponent.h"
+#include "Components/Combat/PawnCombatComponent.h"
 
 void UWarriorGameplayAbility::OnGiveAbility(const FGameplayAbilityActorInfo *ActorInfo, const FGameplayAbilitySpec &Spec)
 {
@@ -29,4 +31,14 @@ void UWarriorGameplayAbility::EndAbility(const FGameplayAbilitySpecHandle Handle
             ActorInfo->AbilitySystemComponent->ClearAbility(Handle);
         }
     }
+}
+
+UPawnCombatComponent * UWarriorGameplayAbility::GetPawnCombatComponentFromActorInfo() const
+{
+    return GetAvatarActorFromActorInfo()->FindComponentByClass<UPawnCombatComponent>();
+}
+
+UWarriorAbilitySystemComponent * UWarriorGameplayAbility::GetWarriorAbilitySystemComponentFromActorInfo() const
+{
+    return Cast<UWarriorAbilitySystemComponent>(CurrentActorInfo->AbilitySystemComponent);
 }

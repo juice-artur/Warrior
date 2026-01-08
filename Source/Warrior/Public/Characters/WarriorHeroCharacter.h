@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "WarriorHeroCharacter.generated.h"
 
+class UHeroCombatComponent;
 struct FInputActionValue;
 class UDataAsset_InputConfig;
 class UCameraComponent;
@@ -19,6 +20,11 @@ class WARRIOR_API AWarriorHeroCharacter : public AWarriorBaseCharacter
 
 public:
     AWarriorHeroCharacter();
+
+    FORCEINLINE UHeroCombatComponent* GetHeroCombatComponent() const
+    {
+        return HeroCombatComponent;
+    }
 
 protected:
     virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
@@ -34,6 +40,9 @@ private:
 
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
     UCameraComponent* FollowCamera;
+
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Combat", meta = (AllowPrivateAccess = "true"))
+    UHeroCombatComponent* HeroCombatComponent;
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = CharacterData, meta = (AllowPrivateAccess = "true"))
     UDataAsset_InputConfig* InputConfigDataAsset;
