@@ -3,6 +3,7 @@
 #pragma once
 
 #include "Characters/WarriorBaseCharacter.h"
+#include "GameplayTagContainer.h"
 #include "CoreMinimal.h"
 #include "WarriorHeroCharacter.generated.h"
 
@@ -50,4 +51,7 @@ private:
 private:
     void InputMove(const FInputActionValue& InputActionValue);
     void InputLook(const FInputActionValue& InputActionValue);
+
+    void InputAbilityInputPressed(FGameplayTag InInputTag);
+    void InputAbilityInputReleased(FGameplayTag InInputTag);
 };
