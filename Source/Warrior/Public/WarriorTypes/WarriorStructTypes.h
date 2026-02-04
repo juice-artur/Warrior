@@ -7,7 +7,7 @@
 #include "WarriorStructTypes.generated.h"
 
 class UInputMappingContext;
-class UWarriorGameplayAbility;
+class UWarriorHeroGameplayAbility;
 class UWarriorHeroLinkedAnimLayer;
 
 
@@ -21,7 +21,7 @@ public:
     FGameplayTag InputTag;
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-    TSubclassOf<UWarriorGameplayAbility> AbilityToGrant;
+    TSubclassOf<UWarriorHeroGameplayAbility> AbilityToGrant;
 
 public:
     bool IsValid() const;
