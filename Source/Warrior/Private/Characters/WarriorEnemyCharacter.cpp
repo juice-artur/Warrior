@@ -36,7 +36,7 @@ void AWarriorEnemyCharacter::PossessedBy(AController *NewController)
 
 void AWarriorEnemyCharacter::InitEnemyStartUpData()
 {
-    if (CharacterStartUpData.IsValid())
+    if (CharacterStartUpData.IsNull())
     {
         return;
     }
