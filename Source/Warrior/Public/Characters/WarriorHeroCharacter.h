@@ -35,6 +35,10 @@ protected:
     virtual void PossessedBy(AController* NewController) override;
     //~ End APawn Interface
 
+    //~ Begin PawnCombatInterface Interface.
+    virtual UPawnCombatComponent* GetPawnCombatComponent() const override;
+    //~ End PawnCombatInterface Interface
+
 private:
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
     USpringArmComponent* CameraBoom;
