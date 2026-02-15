@@ -21,6 +21,7 @@ class WARRIOR_API UWarriorAttributeSet : public UAttributeSet
 
 public:
     UWarriorAttributeSet();
+    virtual void PostGameplayEffectExecute(const struct FGameplayEffectModCallbackData &Data) override;
 
 public:
     UPROPERTY(BlueprintReadOnly, Category = "Health")
