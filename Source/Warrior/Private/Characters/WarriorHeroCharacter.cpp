@@ -7,13 +7,14 @@
 #include "Components/CapsuleComponent.h"
 #include "Components/Combat/HeroCombatComponent.h"
 #include "Components/Input/WarriorInputComponent.h"
+#include "Components/UI/HeroUIComponent.h"
 #include "DataAssets/Input/DataAsset_InputConfig.h"
 #include "DataAssets/StartUpData/DataAsset_StartUpDataBase.h"
 #include "EnhancedInputSubsystems.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
-#include "WarriorDebugHelper.h"
 #include "WarriorGameplayTags.h"
+
 
 AWarriorHeroCharacter::AWarriorHeroCharacter()
 {
@@ -39,6 +40,8 @@ AWarriorHeroCharacter::AWarriorHeroCharacter()
     GetCharacterMovement()->BrakingDecelerationWalking = 2000.0f;
 
     HeroCombatComponent = CreateDefaultSubobject<UHeroCombatComponent>(TEXT("HeroCombatComponent"));
+
+    HeroUIComponent = CreateDefaultSubobject<UHeroUIComponent>(TEXT("HeroUIComponent"));
 }
 void AWarriorHeroCharacter::SetupPlayerInputComponent(UInputComponent *PlayerInputComponent)
 {
@@ -81,6 +84,11 @@ void AWarriorHeroCharacter::PossessedBy(AController *NewController)
 UPawnCombatComponent *AWarriorHeroCharacter::GetPawnCombatComponent() const
 {
     return HeroCombatComponent;
+}
+
+UPawnUIComponent *AWarriorHeroCharacter::GetPawnUIComponent() const
+{
+  return HeroUIComponent;
 }
 
 void AWarriorHeroCharacter::InputMove(const FInputActionValue &InputActionValue)

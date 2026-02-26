@@ -3,10 +3,11 @@
 #pragma once
 
 #include "Characters/WarriorBaseCharacter.h"
-#include "GameplayTagContainer.h"
 #include "CoreMinimal.h"
+#include "GameplayTagContainer.h"
 #include "WarriorHeroCharacter.generated.h"
 
+class UHeroUIComponent;
 class UHeroCombatComponent;
 struct FInputActionValue;
 class UDataAsset_InputConfig;
@@ -39,6 +40,10 @@ protected:
     virtual UPawnCombatComponent* GetPawnCombatComponent() const override;
     //~ End PawnCombatInterface Interface
 
+    //~ Begin IPawnUIInterface Interface.
+    virtual UPawnUIComponent* GetPawnUIComponent() const override;
+    //~ End IPawnUIInterface Interface
+
 private:
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
     USpringArmComponent* CameraBoom;
@@ -48,6 +53,9 @@ private:
 
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Combat", meta = (AllowPrivateAccess = "true"))
     UHeroCombatComponent* HeroCombatComponent;
+
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "UI", meta = (AllowPrivateAccess = "true"))
+    UHeroUIComponent* HeroUIComponent;
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = CharacterData, meta = (AllowPrivateAccess = "true"))
     UDataAsset_InputConfig* InputConfigDataAsset;
