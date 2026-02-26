@@ -5,6 +5,18 @@
 #include "Interfaces/PawnUIInterface.h"
 
 
+void UWarriorWidgetBase::InitEnemyCreatedWidget(AActor *OwningEnemyActor)
+{
+    if (IPawnUIInterface* PawnUIInterface = Cast<IPawnUIInterface>(OwningEnemyActor))
+    {
+        UEnemyUIComponent* EnemyUIComponent = PawnUIInterface->GetEnemyUIComponent();
+
+        checkf(EnemyUIComponent,TEXT("Failed to extract an EnemyUIComponent from %s"),*OwningEnemyActor->GetActorNameOrLabel());
+
+        BP_OnOwningEnemyUIComponentInitialized(EnemyUIComponent);
+    }
+}
+
 void UWarriorWidgetBase::NativeOnInitialized()
 {
     Super::NativeOnInitialized();

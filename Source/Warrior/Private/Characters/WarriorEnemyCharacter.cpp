@@ -46,6 +46,11 @@ UPawnUIComponent *AWarriorEnemyCharacter::GetPawnUIComponent() const
   return EnemyUIComponent;
 }
 
+UEnemyUIComponent *AWarriorEnemyCharacter::GetEnemyUIComponent() const
+{
+  return EnemyUIComponent;
+}
+
 void AWarriorEnemyCharacter::InitEnemyStartUpData()
 {
     if (CharacterStartUpData.IsNull())
