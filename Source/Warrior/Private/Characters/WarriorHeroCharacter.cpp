@@ -91,6 +91,11 @@ UPawnUIComponent *AWarriorHeroCharacter::GetPawnUIComponent() const
   return HeroUIComponent;
 }
 
+UHeroUIComponent *AWarriorHeroCharacter::GetHeroUIComponent() const
+{
+  return HeroUIComponent;
+}
+
 void AWarriorHeroCharacter::InputMove(const FInputActionValue &InputActionValue)
 {
     const FVector2D MovementVector = InputActionValue.Get<FVector2D>();
