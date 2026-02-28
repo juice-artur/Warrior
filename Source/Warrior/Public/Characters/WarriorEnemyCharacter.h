@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "WarriorEnemyCharacter.generated.h"
 
+class UWidgetComponent;
 class UEnemyUIComponent;
 class UEnemyCombatComponent;
 
@@ -19,6 +20,8 @@ public:
     AWarriorEnemyCharacter();
 
 protected:
+    virtual void BeginPlay() override;
+
     //~ Begin APawn Interface.
     virtual void PossessedBy(AController* NewController) override;
     //~ End APawn Interface
@@ -38,6 +41,9 @@ protected:
 
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "UI")
     UEnemyUIComponent* EnemyUIComponent;
+
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "UI")
+    UWidgetComponent* EnemyHealthWidgetComponent;
 
 public:
     FORCEINLINE UEnemyCombatComponent* GetEnemyCombatComponent() const
