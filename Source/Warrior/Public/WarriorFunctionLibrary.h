@@ -26,7 +26,7 @@ public:
     static void AddGameplayTagToActorIfNone(AActor* InActor, FGameplayTag TagToAdd);
 
     UFUNCTION(BlueprintCallable, Category = "Warrior|FunctionLibrary")
-    static void RemoveGameplayFromActorIfFound(AActor* InActor, FGameplayTag TagToRemove);
+    static void RemoveGameplayTagFromActorIfFound(AActor* InActor, FGameplayTag TagToRemove);
 
     UFUNCTION(BlueprintCallable, Category = "Warrior|FunctionLibrary", meta = (DisplayName = "Does Actor Have Tag", ExpandEnumAsExecs = "OutConfirmType"))
     static void BP_DoesActorHaveTag(AActor* InActor, FGameplayTag TagToCheck, EWarriorConfirmType& OutConfirmType);
