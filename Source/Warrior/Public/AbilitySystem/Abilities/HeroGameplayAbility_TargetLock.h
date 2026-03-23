@@ -2,11 +2,11 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
 #include "AbilitySystem/Abilities/WarriorHeroGameplayAbility.h"
+#include "CoreMinimal.h"
 #include "HeroGameplayAbility_TargetLock.generated.h"
 
-
+class UWarriorWidgetBase;
 UCLASS()
 class WARRIOR_API UHeroGameplayAbility_TargetLock : public UWarriorHeroGameplayAbility
 {
@@ -21,11 +21,16 @@ protected:
         const FGameplayAbilityActivationInfo ActivationInfo, bool bReplicateEndAbility, bool bWasCancelled) override;
     //~ End UGameplayAbility Interface
 
+    UFUNCTION(BlueprintCallable)
+    void OnTargetLockTick(float DeltaTime);
+
 private:
     void TryLockOnTarget();
     void GetAvailableActorsToLock();
 
     AActor* GetNearestTargetFromAvailableActors(const TArray<AActor*>& InAvailableActors);
+    void DrawTargetLockWidget();
+    void SetTargetLockWidgetPosition();
 
     void CancelTargetLockAbility();
     void CleanUp();
@@ -43,9 +48,18 @@ private:
     UPROPERTY(EditDefaultsOnly, Category = "Target Lock")
     bool bShowPersistentDebugShape = false;
 
+    UPROPERTY(EditDefaultsOnly, Category = "Target Lock")
+    TSubclassOf<UWarriorWidgetBase> TargetLockWidgetClass;
+
     UPROPERTY()
     TArray<AActor*> AvailableActorsToLock;
 
     UPROPERTY()
     AActor* CurrentLockedActor;
+
+    UPROPERTY()
+    UWarriorWidgetBase* DrawnTargetLockWidget;
+
+    UPROPERTY()
+    FVector2D TargetLockWidgetSize = FVector2D::ZeroVector;
 };

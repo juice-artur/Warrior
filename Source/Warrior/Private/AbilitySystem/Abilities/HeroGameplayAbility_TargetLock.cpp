@@ -1,11 +1,17 @@
 // Warrior, Copyright 2026 - 2026, Juicy, Inc.
 
 #include "AbilitySystem/Abilities/HeroGameplayAbility_TargetLock.h"
-#include "Kismet/KismetSystemLibrary.h"
-#include "Characters/WarriorHeroCharacter.h"
 
+#include "Blueprint/WidgetLayoutLibrary.h"
+#include "Blueprint/WidgetTree.h"
+#include "Characters/WarriorHeroCharacter.h"
+#include "Components/SizeBox.h"
+#include "Controllers/WarriorHeroController.h"
 #include "Kismet/GameplayStatics.h"
-#include "WarriorDebugHelper.h"
+#include "Kismet/KismetSystemLibrary.h"
+#include "WarriorFunctionLibrary.h"
+#include "WarriorGameplayTags.h"
+#include "Widgets/WarriorWidgetBase.h"
 
 void UHeroGameplayAbility_TargetLock::ActivateAbility(
     const FGameplayAbilitySpecHandle Handle,
@@ -28,6 +34,18 @@ void UHeroGameplayAbility_TargetLock::EndAbility(
     Super::EndAbility(Handle, ActorInfo, ActivationInfo, bReplicateEndAbility, bWasCancelled);
 }
 
+void UHeroGameplayAbility_TargetLock::OnTargetLockTick(float DeltaTime)
+{
+    if (!CurrentLockedActor ||
+            UWarriorFunctionLibrary::NativeDoesActorHaveTag(CurrentLockedActor,WarriorGameplayTags::Shared_Status_Dead) ||
+            UWarriorFunctionLibrary::NativeDoesActorHaveTag(GetHeroCharacterFromActorInfo(), WarriorGameplayTags::Shared_Status_Dead))
+    {
+        CancelTargetLockAbility();
+    }
+
+    SetTargetLockWidgetPosition();
+}
+
 void UHeroGameplayAbility_TargetLock::TryLockOnTarget()
 {
     GetAvailableActorsToLock();
@@ -42,7 +60,8 @@ void UHeroGameplayAbility_TargetLock::TryLockOnTarget()
 
     if (CurrentLockedActor)
     {
-        Debug::Print(CurrentLockedActor->GetActorNameOrLabel());
+        DrawTargetLockWidget();
+        SetTargetLockWidgetPosition();
     }
     else
     {
@@ -87,6 +106,55 @@ AActor* UHeroGameplayAbility_TargetLock::GetNearestTargetFromAvailableActors(con
         ClosestDistance);
 }
 
+void UHeroGameplayAbility_TargetLock::DrawTargetLockWidget()
+{
+    if (!DrawnTargetLockWidget)
+    {
+        checkf(TargetLockWidgetClass, TEXT("Forgot to assign a valid widget class in Blueprint"));
+
+        DrawnTargetLockWidget = CreateWidget<UWarriorWidgetBase>(GetHeroControllerFromActorInfo(), TargetLockWidgetClass);
+
+        check(DrawnTargetLockWidget);
+
+        DrawnTargetLockWidget->AddToViewport();
+    }
+}
+
+void UHeroGameplayAbility_TargetLock::SetTargetLockWidgetPosition()
+{
+    if (!DrawnTargetLockWidget  || !CurrentLockedActor)
+    {
+        CancelTargetLockAbility();
+        return;
+    }
+
+    FVector2D ScreenPosition;
+    UWidgetLayoutLibrary::ProjectWorldLocationToWidgetPosition(
+        GetHeroControllerFromActorInfo(),
+        CurrentLockedActor->GetActorLocation(),
+        ScreenPosition,
+        true
+    );
+
+    if (TargetLockWidgetSize == FVector2D::ZeroVector)
+    {
+        DrawnTargetLockWidget->WidgetTree->ForEachWidget(
+            [this](UWidget* FoundWidget)
+            {
+                if (USizeBox* FoundSizeBox = Cast<USizeBox>(FoundWidget))
+                {
+                    TargetLockWidgetSize.X = FoundSizeBox->GetWidthOverride();
+                    TargetLockWidgetSize.Y = FoundSizeBox->GetHeightOverride();
+                }
+            }
+        );
+    }
+
+    ScreenPosition -= (TargetLockWidgetSize / 2.f);
+
+    DrawnTargetLockWidget->SetPositionInViewport(ScreenPosition,false);
+}
+
 void UHeroGameplayAbility_TargetLock::CancelTargetLockAbility()
 {
     CancelAbility(GetCurrentAbilitySpecHandle(), GetCurrentActorInfo(), GetCurrentActivationInfo(),true);
@@ -96,4 +164,13 @@ void UHeroGameplayAbility_TargetLock::CleanUp()
 {
     AvailableActorsToLock.Empty();
     CurrentLockedActor = nullptr;
+
+    if (DrawnTargetLockWidget)
+    {
+        DrawnTargetLockWidget->RemoveFromParent();
+    }
+
+    DrawnTargetLockWidget = nullptr;
+
+    TargetLockWidgetSize = FVector2D::ZeroVector;
 }
