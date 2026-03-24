@@ -34,12 +34,12 @@ inline void UWarriorInputComponent::BindNativeInputAction(const UDataAsset_Input
     UserObject *ContextObject,
     CallbackFunc Func)
 {
-  checkf(InInputConfig, TEXT("Input config data asset is null,can not proceed with binding"));
+    checkf(InInputConfig, TEXT("Input config data asset is null,can not proceed with binding"));
 
-  if (UInputAction *FoundAction = InInputConfig->FindNativeInputActionByTag(InInputTag))
-  {
-    BindAction(FoundAction, TriggerEvent, ContextObject, Func);
-  }
+    if (UInputAction *FoundAction = InInputConfig->FindNativeInputActionByTag(InInputTag))
+    {
+        BindAction(FoundAction, TriggerEvent, ContextObject, Func);
+    }
 }
 
 template <class UserObject, typename CallbackFunc>
