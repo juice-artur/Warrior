@@ -19,6 +19,7 @@ UWarriorAttributeSet::UWarriorAttributeSet()
     InitAttackPower(1.f);
     InitDefensePower(1.f);
 }
+
 void UWarriorAttributeSet::PostGameplayEffectExecute(const struct FGameplayEffectModCallbackData& Data)
 {
     if (!CachedPawnUIInterface.IsValid())
