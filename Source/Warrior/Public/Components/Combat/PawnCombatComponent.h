@@ -43,6 +43,11 @@ public:
     UPROPERTY(BlueprintReadWrite, Category = "Warrior|Combat")
     FGameplayTag CurrentEquippedWeaponTag;
 
+
+protected:
+    virtual void ToggleCurrentEquippedWeaponCollision(bool bShouldEnable);
+    virtual void ToggleBodyCollisionBoxCollision(bool bShouldEnable,EToggleDamageType ToggleDamageType);
+
 protected:
 	TArray<AActor*> OverlappedActors;
 
