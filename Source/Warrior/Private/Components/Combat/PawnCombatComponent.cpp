@@ -4,7 +4,6 @@
 
 #include "Components/BoxComponent.h"
 #include "Items/Weapons/WarriorWeaponBase.h"
-#include "WarriorDebugHelper.h"
 
 void UPawnCombatComponent::RegisterSpawnedWeapon(FGameplayTag InWeaponTagToRegister,
     AWarriorWeaponBase *InWeaponToRegister,
