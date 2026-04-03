@@ -12,14 +12,14 @@ void UEnemyUIComponent::RegisterEnemyDrawnWidget(UWarriorWidgetBase* InWidgetToR
 void UEnemyUIComponent::RemoveEnemyDrawnWidgetsIfAny()
 {
 
-    if (EnemyDrawnWidgets.IsEmpty())
+    if(EnemyDrawnWidgets.IsEmpty())
     {
         return;
     }
 
-    for (UWarriorWidgetBase* DrawnWidget : EnemyDrawnWidgets)
+    for(UWarriorWidgetBase* DrawnWidget : EnemyDrawnWidgets)
     {
-        if (DrawnWidget)
+        if(DrawnWidget)
         {
             DrawnWidget->RemoveFromParent();
         }

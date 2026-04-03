@@ -77,9 +77,9 @@ void AWarriorHeroCharacter::BeginPlay()
 
 void AWarriorHeroCharacter::PossessedBy(AController *NewController)
 {
-    if (!CharacterStartUpData.IsNull())
+    if(!CharacterStartUpData.IsNull())
     {
-        if (UDataAsset_StartUpDataBase* LoadedData = CharacterStartUpData.LoadSynchronous())
+        if(UDataAsset_StartUpDataBase* LoadedData = CharacterStartUpData.LoadSynchronous())
         {
             LoadedData->GiveToAbilitySystemComponent(WarriorAbilitySystemComponent);
         }
@@ -107,14 +107,14 @@ void AWarriorHeroCharacter::InputMove(const FInputActionValue &InputActionValue)
 
     const FRotator MovementRotation(0.f,Controller->GetControlRotation().Yaw,0.f);
 
-    if (MovementVector.Y != 0.f)
+    if(MovementVector.Y != 0.f)
     {
         const FVector ForwardDirection = MovementRotation.RotateVector(FVector::ForwardVector);
 
         AddMovementInput(ForwardDirection, MovementVector.Y);
     }
 
-    if (MovementVector.X != 0.f)
+    if(MovementVector.X != 0.f)
     {
         const FVector RightDirection = MovementRotation.RotateVector(FVector::RightVector);
 
@@ -126,12 +126,12 @@ void AWarriorHeroCharacter::InputLook(const FInputActionValue &InputActionValue)
 {
     const FVector2D LookAxisVector = InputActionValue.Get<FVector2D>();
 
-    if (LookAxisVector.X != 0.f)
+    if(LookAxisVector.X != 0.f)
     {
         AddControllerYawInput(LookAxisVector.X);
     }
 
-    if (LookAxisVector.Y != 0.f)
+    if(LookAxisVector.Y != 0.f)
     {
         AddControllerPitchInput(LookAxisVector.Y);
     }

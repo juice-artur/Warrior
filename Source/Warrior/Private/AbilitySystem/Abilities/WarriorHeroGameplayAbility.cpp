@@ -9,7 +9,7 @@
 
 AWarriorHeroCharacter * UWarriorHeroGameplayAbility::GetHeroCharacterFromActorInfo()
 {
-    if (!CachedWarriorHeroCharacter.IsValid())
+    if(!CachedWarriorHeroCharacter.IsValid())
     {
         CachedWarriorHeroCharacter = Cast<AWarriorHeroCharacter>(CurrentActorInfo->AvatarActor);
     }
@@ -19,7 +19,7 @@ AWarriorHeroCharacter * UWarriorHeroGameplayAbility::GetHeroCharacterFromActorIn
 
 AWarriorHeroController* UWarriorHeroGameplayAbility::GetHeroControllerFromActorInfo()
 {
-    if (!CachedWarriorHeroController.IsValid())
+    if(!CachedWarriorHeroController.IsValid())
     {
         CachedWarriorHeroController = Cast<AWarriorHeroController>(GetOwningActorFromActorInfo()->GetInstigatorController());
     }
@@ -49,7 +49,7 @@ FGameplayEffectSpecHandle UWarriorHeroGameplayAbility::MakeHeroDamageEffectSpecH
     EffectSpecHandle.Data->SetSetByCallerMagnitude(WarriorGameplayTags::Shared_SetByCaller_BaseDamage,
         InWeaponBaseDamage);
 
-    if (InCurrentAttackTypeTag.IsValid())
+    if(InCurrentAttackTypeTag.IsValid())
     {
         EffectSpecHandle.Data->SetSetByCallerMagnitude(InCurrentAttackTypeTag, InUsedComboCount);
     }

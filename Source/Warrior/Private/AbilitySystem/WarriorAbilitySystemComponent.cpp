@@ -7,21 +7,21 @@
 
 void UWarriorAbilitySystemComponent::OnAbilityInputPressed(const FGameplayTag &InInputTag)
 {
-    if (!InInputTag.IsValid())
+    if(!InInputTag.IsValid())
     {
         return;
     }
 
-    for (const FGameplayAbilitySpec& AbilitySpec : GetActivatableAbilities())
+    for(const FGameplayAbilitySpec& AbilitySpec : GetActivatableAbilities())
     {
         if(!AbilitySpec.DynamicAbilityTags.HasTagExact(InInputTag))
         {
             continue;
         }
 
-        if (InInputTag.MatchesTag(WarriorGameplayTags::InputTag_Toggleable))
+        if(InInputTag.MatchesTag(WarriorGameplayTags::InputTag_Toggleable))
         {
-            if (AbilitySpec.IsActive())
+            if(AbilitySpec.IsActive())
             {
                 CancelAbilityHandle(AbilitySpec.Handle);
             }
@@ -39,14 +39,14 @@ void UWarriorAbilitySystemComponent::OnAbilityInputPressed(const FGameplayTag &I
 
 void UWarriorAbilitySystemComponent::OnAbilityInputReleased(const FGameplayTag &InInputTag)
 {
-    if (!InInputTag.IsValid() || !InInputTag.MatchesTag(WarriorGameplayTags::InputTag_MustBeHeld))
+    if(!InInputTag.IsValid() || !InInputTag.MatchesTag(WarriorGameplayTags::InputTag_MustBeHeld))
     {
         return;
     }
 
-    for (const FGameplayAbilitySpec& AbilitySpec : GetActivatableAbilities())
+    for(const FGameplayAbilitySpec& AbilitySpec : GetActivatableAbilities())
     {
-        if (AbilitySpec.DynamicAbilityTags.HasTagExact(InInputTag) && AbilitySpec.IsActive())
+        if(AbilitySpec.DynamicAbilityTags.HasTagExact(InInputTag) && AbilitySpec.IsActive())
         {
             CancelAbilityHandle(AbilitySpec.Handle);
         }
@@ -58,12 +58,12 @@ void UWarriorAbilitySystemComponent::GrantHeroWeaponAbilities(
     int32 ApplyLevel,
     TArray<FGameplayAbilitySpecHandle> &OutGrantedAbilitySpecHandles)
 {
-    if (InDefaultWeaponAbilities.IsEmpty())
+    if(InDefaultWeaponAbilities.IsEmpty())
     {
         return;
     }
 
-    for (const FWarriorHeroAbilitySet& AbilitySet : InDefaultWeaponAbilities)
+    for(const FWarriorHeroAbilitySet& AbilitySet : InDefaultWeaponAbilities)
     {
         if(!AbilitySet.IsValid())
         {
@@ -81,14 +81,14 @@ void UWarriorAbilitySystemComponent::GrantHeroWeaponAbilities(
 
 void UWarriorAbilitySystemComponent::RemovedGrantedHeroWeaponAbilities(TArray<FGameplayAbilitySpecHandle> &InSpecHandlesToRemove)
 {
-    if (InSpecHandlesToRemove.IsEmpty())
+    if(InSpecHandlesToRemove.IsEmpty())
     {
         return;
     }
 
-    for (const FGameplayAbilitySpecHandle& SpecHandle : InSpecHandlesToRemove)
+    for(const FGameplayAbilitySpecHandle& SpecHandle : InSpecHandlesToRemove)
     {
-        if (SpecHandle.IsValid())
+        if(SpecHandle.IsValid())
         {
             ClearAbility(SpecHandle);
         }
@@ -102,14 +102,14 @@ bool UWarriorAbilitySystemComponent::TryActivateAbilityByTag(FGameplayTag Abilit
     TArray<FGameplayAbilitySpec*> FoundAbilitySpecs;
     GetActivatableGameplayAbilitySpecsByAllMatchingTags(AbilityTagToActivate.GetSingleTagContainer(),FoundAbilitySpecs);
 
-    if (!FoundAbilitySpecs.IsEmpty())
+    if(!FoundAbilitySpecs.IsEmpty())
     {
         const int32 RandomAbilityIndex = FMath::RandRange(0,FoundAbilitySpecs.Num() - 1);
         FGameplayAbilitySpec* SpecToActivate = FoundAbilitySpecs[RandomAbilityIndex];
 
         check(SpecToActivate);
 
-        if (!SpecToActivate->IsActive())
+        if(!SpecToActivate->IsActive())
         {
             return TryActivateAbility(SpecToActivate->Handle);
         }

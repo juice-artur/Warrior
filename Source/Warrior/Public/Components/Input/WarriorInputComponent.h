@@ -36,7 +36,7 @@ inline void UWarriorInputComponent::BindNativeInputAction(const UDataAsset_Input
 {
     checkf(InInputConfig, TEXT("Input config data asset is null,can not proceed with binding"));
 
-    if (UInputAction *FoundAction = InInputConfig->FindNativeInputActionByTag(InInputTag))
+    if(UInputAction *FoundAction = InInputConfig->FindNativeInputActionByTag(InInputTag))
     {
         BindAction(FoundAction, TriggerEvent, ContextObject, Func);
     }
@@ -49,7 +49,7 @@ void UWarriorInputComponent::BindAbilityInputAction(const UDataAsset_InputConfig
 {
     checkf(InInputConfig, TEXT("Input config data asset is null,can not proceed with binding"));
 
-    for (const FWarriorInputActionConfig& AbilityInputActionConfig : InInputConfig->AbilityInputActions)
+    for(const FWarriorInputActionConfig& AbilityInputActionConfig : InInputConfig->AbilityInputActions)
     {
         if(!AbilityInputActionConfig.IsValid())
         {

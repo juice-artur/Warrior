@@ -30,9 +30,9 @@ void AWarriorWeaponBase::OnCollisionBoxBeginOverlap(
 
     checkf(WeaponOwningPawn,TEXT("Forgot to assign an instiagtor as the owning pawn of the weapon: %s"),*GetName());
 
-    if (APawn* HitPawn = Cast<APawn>(OtherActor))
+    if(APawn* HitPawn = Cast<APawn>(OtherActor))
     {
-        if (UWarriorFunctionLibrary::IsTargetPawnHostile(WeaponOwningPawn, HitPawn))
+        if(UWarriorFunctionLibrary::IsTargetPawnHostile(WeaponOwningPawn, HitPawn))
         {
             OnWeaponHitTarget.ExecuteIfBound(OtherActor);
         }
@@ -47,9 +47,9 @@ void AWarriorWeaponBase::OnCollisionBoxEndOverlap(
 
     checkf(WeaponOwningPawn,TEXT("Forgot to assign an instiagtor as the owning pawn of the weapon: %s"),*GetName());
 
-    if (APawn* HitPawn = Cast<APawn>(OtherActor))
+    if(APawn* HitPawn = Cast<APawn>(OtherActor))
     {
-        if (UWarriorFunctionLibrary::IsTargetPawnHostile(WeaponOwningPawn,HitPawn))
+        if(UWarriorFunctionLibrary::IsTargetPawnHostile(WeaponOwningPawn,HitPawn))
         {
             OnWeaponPulledFromTarget.ExecuteIfBound(OtherActor);
         }

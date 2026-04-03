@@ -22,7 +22,7 @@ UWarriorAttributeSet::UWarriorAttributeSet()
 
 void UWarriorAttributeSet::PostGameplayEffectExecute(const struct FGameplayEffectModCallbackData& Data)
 {
-    if (!CachedPawnUIInterface.IsValid())
+    if(!CachedPawnUIInterface.IsValid())
     {
         CachedPawnUIInterface = TWeakInterfacePtr<IPawnUIInterface>(Data.Target.GetAvatarActor());
     }
@@ -34,7 +34,7 @@ void UWarriorAttributeSet::PostGameplayEffectExecute(const struct FGameplayEffec
     checkf(PawnUIComponent,TEXT("Couldn't extract a PawnUIComponent from %s"), *Data.Target.GetAvatarActor()->GetActorNameOrLabel());
 
 
-    if (Data.EvaluatedData.Attribute == GetCurrentHealthAttribute())
+    if(Data.EvaluatedData.Attribute == GetCurrentHealthAttribute())
     {
         const float NewCurrentHealth = FMath::Clamp(GetCurrentHealth(),0.f, GetMaxHealth());
 
@@ -43,19 +43,19 @@ void UWarriorAttributeSet::PostGameplayEffectExecute(const struct FGameplayEffec
         PawnUIComponent->OnCurrentHealthChanged.Broadcast(GetCurrentHealth() / GetMaxHealth());
     }
 
-    if (Data.EvaluatedData.Attribute == GetCurrentRageAttribute())
+    if(Data.EvaluatedData.Attribute == GetCurrentRageAttribute())
     {
         const float NewCurrentRage = FMath::Clamp(GetCurrentRage(),0.f,GetMaxRage());
 
         SetCurrentRage(NewCurrentRage);
 
-        if (UHeroUIComponent* HeroUIComponent = CachedPawnUIInterface->GetHeroUIComponent())
+        if(UHeroUIComponent* HeroUIComponent = CachedPawnUIInterface->GetHeroUIComponent())
         {
             HeroUIComponent->OnCurrentRageChanged.Broadcast(GetCurrentRage() / GetMaxRage());
         }
     }
 
-    if (Data.EvaluatedData.Attribute == GetDamageTakenAttribute())
+    if(Data.EvaluatedData.Attribute == GetDamageTakenAttribute())
     {
         const float OldHealth = GetCurrentHealth();
         const float DamageDone = GetDamageTaken();
@@ -74,7 +74,7 @@ void UWarriorAttributeSet::PostGameplayEffectExecute(const struct FGameplayEffec
         Debug::Print(DebugString, FColor::Green);*/
 
         PawnUIComponent->OnCurrentHealthChanged.Broadcast(GetCurrentHealth() / GetMaxHealth());
-        if (GetCurrentHealth() == 0.f)
+        if(GetCurrentHealth() == 0.f)
         {
             UWarriorFunctionLibrary::AddGameplayTagToActorIfNone(Data.Target.GetAvatarActor(), WarriorGameplayTags::Shared_Status_Dead);
         }

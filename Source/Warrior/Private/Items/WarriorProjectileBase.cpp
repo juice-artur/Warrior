@@ -39,7 +39,7 @@ void AWarriorProjectileBase::BeginPlay()
 {
     Super::BeginPlay();
 
-    if (ProjectileDamagePolicy == EProjectileDamagePolicy::OnBeginOverlap)
+    if(ProjectileDamagePolicy == EProjectileDamagePolicy::OnBeginOverlap)
     {
         ProjectileCollisionBox->SetCollisionResponseToChannel(ECC_Pawn,ECR_Overlap);
     }
@@ -55,7 +55,7 @@ void AWarriorProjectileBase::OnProjectileHit(UPrimitiveComponent* HitComponent,
 
     APawn* HitPawn = Cast<APawn>(OtherActor);
 
-    if (!HitPawn || !UWarriorFunctionLibrary::IsTargetPawnHostile(GetInstigator(),HitPawn))
+    if(!HitPawn || !UWarriorFunctionLibrary::IsTargetPawnHostile(GetInstigator(),HitPawn))
     {
         Destroy();
         return;
@@ -65,7 +65,7 @@ void AWarriorProjectileBase::OnProjectileHit(UPrimitiveComponent* HitComponent,
 
     const bool bIsPlayerBlocking = UWarriorFunctionLibrary::NativeDoesActorHaveTag(HitPawn, WarriorGameplayTags::Player_Status_Blocking);
 
-    if (bIsPlayerBlocking)
+    if(bIsPlayerBlocking)
     {
         bIsValidBlock = UWarriorFunctionLibrary::IsValidBlock(this,HitPawn);
     }
@@ -74,7 +74,7 @@ void AWarriorProjectileBase::OnProjectileHit(UPrimitiveComponent* HitComponent,
     Data.Instigator = this;
     Data.Target = HitPawn;
 
-    if (bIsValidBlock)
+    if(bIsValidBlock)
     {
         UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(
             HitPawn,
@@ -107,7 +107,7 @@ void AWarriorProjectileBase::HandleApplyProjectileDamage(
     const bool bWasApplied = UWarriorFunctionLibrary::ApplyGameplayEffectSpecHandleToTargetActor(GetInstigator(),
         InHitPawn, ProjectileDamageEffectSpecHandle);
 
-    if (bWasApplied)
+    if(bWasApplied)
     {
         UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(
             InHitPawn,

@@ -44,7 +44,7 @@ void UHeroGameplayAbility_TargetLock::EndAbility(
 
 void UHeroGameplayAbility_TargetLock::OnTargetLockTick(float DeltaTime)
 {
-    if (!CurrentLockedActor ||
+    if(!CurrentLockedActor ||
             UWarriorFunctionLibrary::NativeDoesActorHaveTag(CurrentLockedActor,WarriorGameplayTags::Shared_Status_Dead) ||
             UWarriorFunctionLibrary::NativeDoesActorHaveTag(GetHeroCharacterFromActorInfo(), WarriorGameplayTags::Shared_Status_Dead))
     {
@@ -59,7 +59,7 @@ void UHeroGameplayAbility_TargetLock::OnTargetLockTick(float DeltaTime)
     	&&
     	!UWarriorFunctionLibrary::NativeDoesActorHaveTag(GetHeroCharacterFromActorInfo(),WarriorGameplayTags::Player_Status_Blocking);
 
-    if (bShouldOverrideRotation)
+    if(bShouldOverrideRotation)
     {
     	FRotator LookAtRot = UKismetMathLibrary::FindLookAtRotation(
     		GetHeroCharacterFromActorInfo()->GetActorLocation(),
@@ -86,7 +86,7 @@ void UHeroGameplayAbility_TargetLock::SwitchTarget(const FGameplayTag& InSwitchD
 
     GetAvailableActorsAroundTarget(ActorsOnLeft,ActorsOnRight);
 
-    if (InSwitchDirectionTag == WarriorGameplayTags::Player_Event_SwitchTarget_Left)
+    if(InSwitchDirectionTag == WarriorGameplayTags::Player_Event_SwitchTarget_Left)
     {
         NewTargetToLock = GetNearestTargetFromAvailableActors(ActorsOnLeft);
     }
@@ -95,7 +95,7 @@ void UHeroGameplayAbility_TargetLock::SwitchTarget(const FGameplayTag& InSwitchD
         NewTargetToLock = GetNearestTargetFromAvailableActors(ActorsOnRight);
     }
 
-    if (NewTargetToLock)
+    if(NewTargetToLock)
     {
         CurrentLockedActor = NewTargetToLock;
     }
@@ -105,7 +105,7 @@ void UHeroGameplayAbility_TargetLock::TryLockOnTarget()
 {
     GetAvailableActorsToLock();
 
-    if (AvailableActorsToLock.IsEmpty())
+    if(AvailableActorsToLock.IsEmpty())
     {
         CancelTargetLockAbility();
         return;
@@ -113,7 +113,7 @@ void UHeroGameplayAbility_TargetLock::TryLockOnTarget()
 
     CurrentLockedActor = GetNearestTargetFromAvailableActors(AvailableActorsToLock);
 
-    if (CurrentLockedActor)
+    if(CurrentLockedActor)
     {
         DrawTargetLockWidget();
         SetTargetLockWidgetPosition();
@@ -144,11 +144,11 @@ void UHeroGameplayAbility_TargetLock::GetAvailableActorsToLock()
         true
     );
 
-    for (const FHitResult& TraceHit : BoxTraceHits)
+    for(const FHitResult& TraceHit : BoxTraceHits)
     {
-        if (AActor* HitActor = TraceHit.GetActor())
+        if(AActor* HitActor = TraceHit.GetActor())
         {
-            if (HitActor != GetHeroCharacterFromActorInfo())
+            if(HitActor != GetHeroCharacterFromActorInfo())
             {
                 AvailableActorsToLock.AddUnique(HitActor);
             }
@@ -166,7 +166,7 @@ AActor* UHeroGameplayAbility_TargetLock::GetNearestTargetFromAvailableActors(con
 void UHeroGameplayAbility_TargetLock::GetAvailableActorsAroundTarget(TArray<AActor*>& OutActorsOnLeft,
     TArray<AActor*>& OutActorsOnRight)
 {
-    if (!CurrentLockedActor || AvailableActorsToLock.IsEmpty())
+    if(!CurrentLockedActor || AvailableActorsToLock.IsEmpty())
     {
         CancelTargetLockAbility();
         return;
@@ -175,7 +175,7 @@ void UHeroGameplayAbility_TargetLock::GetAvailableActorsAroundTarget(TArray<AAct
     const FVector PlayerLocation = GetHeroCharacterFromActorInfo()->GetActorLocation();
     const FVector PlayerToCurrentNormalized = (CurrentLockedActor->GetActorLocation() - PlayerLocation).GetSafeNormal();
 
-    for (AActor* AvailableActor : AvailableActorsToLock)
+    for(AActor* AvailableActor : AvailableActorsToLock)
     {
         if(!AvailableActor || AvailableActor == CurrentLockedActor)
         {
@@ -186,7 +186,7 @@ void UHeroGameplayAbility_TargetLock::GetAvailableActorsAroundTarget(TArray<AAct
 
         const FVector CrossResult = FVector::CrossProduct(PlayerToCurrentNormalized,PlayerToAvailableNormalized);
 
-        if (CrossResult.Z > 0.f)
+        if(CrossResult.Z > 0.f)
         {
             OutActorsOnRight.AddUnique(AvailableActor);
         }
@@ -199,7 +199,7 @@ void UHeroGameplayAbility_TargetLock::GetAvailableActorsAroundTarget(TArray<AAct
 
 void UHeroGameplayAbility_TargetLock::DrawTargetLockWidget()
 {
-    if (!DrawnTargetLockWidget)
+    if(!DrawnTargetLockWidget)
     {
         checkf(TargetLockWidgetClass, TEXT("Forgot to assign a valid widget class in Blueprint"));
 
@@ -213,7 +213,7 @@ void UHeroGameplayAbility_TargetLock::DrawTargetLockWidget()
 
 void UHeroGameplayAbility_TargetLock::SetTargetLockWidgetPosition()
 {
-    if (!DrawnTargetLockWidget  || !CurrentLockedActor)
+    if(!DrawnTargetLockWidget  || !CurrentLockedActor)
     {
         CancelTargetLockAbility();
         return;
@@ -227,12 +227,12 @@ void UHeroGameplayAbility_TargetLock::SetTargetLockWidgetPosition()
         true
     );
 
-    if (TargetLockWidgetSize == FVector2D::ZeroVector)
+    if(TargetLockWidgetSize == FVector2D::ZeroVector)
     {
         DrawnTargetLockWidget->WidgetTree->ForEachWidget(
             [this](UWidget* FoundWidget)
             {
-                if (USizeBox* FoundSizeBox = Cast<USizeBox>(FoundWidget))
+                if(USizeBox* FoundSizeBox = Cast<USizeBox>(FoundWidget))
                 {
                     TargetLockWidgetSize.X = FoundSizeBox->GetWidthOverride();
                     TargetLockWidgetSize.Y = FoundSizeBox->GetHeightOverride();
@@ -274,7 +274,7 @@ void UHeroGameplayAbility_TargetLock::CleanUp()
     AvailableActorsToLock.Empty();
     CurrentLockedActor = nullptr;
 
-    if (DrawnTargetLockWidget)
+    if(DrawnTargetLockWidget)
     {
         DrawnTargetLockWidget->RemoveFromParent();
     }
@@ -287,7 +287,7 @@ void UHeroGameplayAbility_TargetLock::CleanUp()
 
 void UHeroGameplayAbility_TargetLock::ResetTargetLockMovement()
 {
-    if (CachedDefaultMaxWalkSpeed > 0.f)
+    if(CachedDefaultMaxWalkSpeed > 0.f)
     {
         GetHeroCharacterFromActorInfo()->GetCharacterMovement()->MaxWalkSpeed = CachedDefaultMaxWalkSpeed;
     }
@@ -295,7 +295,7 @@ void UHeroGameplayAbility_TargetLock::ResetTargetLockMovement()
 
 void UHeroGameplayAbility_TargetLock::ResetTargetLockMappingContext()
 {
-    if (!GetHeroControllerFromActorInfo())
+    if(!GetHeroControllerFromActorInfo())
     {
         return;
     }

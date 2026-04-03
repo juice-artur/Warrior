@@ -20,7 +20,7 @@ void UAbilityTask_ExecuteTaskOnTick::TickTask(float DeltaTime)
 {
     Super::TickTask(DeltaTime);
 
-    if (ShouldBroadcastAbilityTaskDelegates())
+    if(ShouldBroadcastAbilityTaskDelegates())
     {
         OnAbilityTaskTick.Broadcast(DeltaTime);
     }

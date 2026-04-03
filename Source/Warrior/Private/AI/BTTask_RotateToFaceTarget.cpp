@@ -27,7 +27,7 @@ void UBTTask_RotateToFaceTarget::InitializeFromAsset(UBehaviorTree& Asset)
 {
     Super::InitializeFromAsset(Asset);
 
-    if (UBlackboardData* BBAsset = GetBlackboardAsset())
+    if(UBlackboardData* BBAsset = GetBlackboardAsset())
     {
         InTargetToFaceKey.ResolveSelectedKey(*BBAsset);
     }
@@ -59,12 +59,12 @@ EBTNodeResult::Type UBTTask_RotateToFaceTarget::ExecuteTask(UBehaviorTreeCompone
     Memory->OwningPawn = OwningPawn;
     Memory->TargetActor = TargetActor;
 
-    if (!Memory->IsValid())
+    if(!Memory->IsValid())
     {
         return EBTNodeResult::Failed;
     }
 
-    if (HasReachedAnglePrecision(OwningPawn,TargetActor))
+    if(HasReachedAnglePrecision(OwningPawn,TargetActor))
     {
         Memory->Reset();
         return EBTNodeResult::Succeeded;
@@ -77,12 +77,12 @@ void UBTTask_RotateToFaceTarget::TickTask(UBehaviorTreeComponent& OwnerComp, uin
 {
     FRotateToFaceTargetTaskMemory* Memory = CastInstanceNodeMemory<FRotateToFaceTargetTaskMemory>(NodeMemory);
 
-    if (!Memory->IsValid())
+    if(!Memory->IsValid())
     {
         FinishLatentTask(OwnerComp, EBTNodeResult::Failed);
     }
 
-    if (HasReachedAnglePrecision(Memory->OwningPawn.Get(), Memory->TargetActor.Get()))
+    if(HasReachedAnglePrecision(Memory->OwningPawn.Get(), Memory->TargetActor.Get()))
     {
         Memory->Reset();
         FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded);

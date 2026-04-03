@@ -11,7 +11,7 @@ void UWarriorCharacterAnimInstance::NativeInitializeAnimation()
 {
     OwningCharacter = Cast<AWarriorBaseCharacter>(TryGetPawnOwner());
 
-    if (OwningCharacter)
+    if(OwningCharacter)
     {
         OwningMovementComponent = OwningCharacter->GetCharacterMovement();
     }
@@ -20,7 +20,7 @@ void UWarriorCharacterAnimInstance::NativeInitializeAnimation()
 void UWarriorCharacterAnimInstance::NativeThreadSafeUpdateAnimation(float DeltaSeconds)
 {
 
-    if (!OwningCharacter || !OwningMovementComponent)
+    if(!OwningCharacter || !OwningMovementComponent)
     {
         return;
     }

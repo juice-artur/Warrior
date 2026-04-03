@@ -35,7 +35,7 @@ ETeamAttitude::Type AWarriorAIController::GetTeamAttitudeTowards(const AActor &O
 
     const IGenericTeamAgentInterface* OtherTeamAgent = Cast<IGenericTeamAgentInterface>(PawnToCheck->GetController());
 
-    if (OtherTeamAgent && OtherTeamAgent->GetGenericTeamId() < GetGenericTeamId())
+    if(OtherTeamAgent && OtherTeamAgent->GetGenericTeamId() < GetGenericTeamId())
     {
         return ETeamAttitude::Hostile;
     }
@@ -47,11 +47,11 @@ void AWarriorAIController::BeginPlay()
 {
     Super::BeginPlay();
 
-    if (UCrowdFollowingComponent* CrowdComp = Cast<UCrowdFollowingComponent>(GetPathFollowingComponent()))
+    if(UCrowdFollowingComponent* CrowdComp = Cast<UCrowdFollowingComponent>(GetPathFollowingComponent()))
     {
         CrowdComp->SetCrowdSimulationState(bEnableDetourCrowdAvoidance ? ECrowdSimulationState::Enabled : ECrowdSimulationState::Disabled);
 
-        switch (DetourCrowdAvoidanceQuality)
+        switch(DetourCrowdAvoidanceQuality)
         {
             case 1:
                 CrowdComp->SetCrowdAvoidanceQuality(ECrowdAvoidanceQuality::Low);
@@ -77,11 +77,11 @@ void AWarriorAIController::BeginPlay()
 
 void AWarriorAIController::OnEnemyPerceptionUpdated(AActor *Actor, FAIStimulus Stimulus)
 {
-    if (UBlackboardComponent* BlackboardComponent = GetBlackboardComponent())
+    if(UBlackboardComponent* BlackboardComponent = GetBlackboardComponent())
     {
-        if (!BlackboardComponent->GetValueAsObject(FName("TargetActor")))
+        if(!BlackboardComponent->GetValueAsObject(FName("TargetActor")))
         {
-            if (Stimulus.WasSuccessfullySensed() && Actor)
+            if(Stimulus.WasSuccessfullySensed() && Actor)
             {
                 BlackboardComponent->SetValueAsObject(FName("TargetActor"), Actor);
             }

@@ -25,7 +25,7 @@ float UHeroCombatComponent::GetHeroCurrentEquippedWeaponDamageAtLevel(float InLe
 
 void UHeroCombatComponent::OnHitTargetActor(AActor* HitActor)
 {
-    if (OverlappedActors.Contains(HitActor))
+    if(OverlappedActors.Contains(HitActor))
     {
         return;
     }

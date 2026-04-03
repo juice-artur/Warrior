@@ -21,7 +21,7 @@ void UPawnCombatComponent::RegisterSpawnedWeapon(FGameplayTag InWeaponTagToRegis
     InWeaponToRegister->OnWeaponHitTarget.BindUObject(this, &ThisClass::OnHitTargetActor);
     InWeaponToRegister->OnWeaponPulledFromTarget.BindUObject(this, &ThisClass::OnWeaponPulledFromTargetActor);
 
-    if (bRegisterAsEquippedWeapon)
+    if(bRegisterAsEquippedWeapon)
     {
         CurrentEquippedWeaponTag = InWeaponTagToRegister;
     }
@@ -29,9 +29,9 @@ void UPawnCombatComponent::RegisterSpawnedWeapon(FGameplayTag InWeaponTagToRegis
 
 AWarriorWeaponBase *UPawnCombatComponent::GetCharacterCarriedWeaponByTag(FGameplayTag InWeaponTagToGet) const
 {
-    if (CharacterCarriedWeaponMap.Contains(InWeaponTagToGet))
+    if(CharacterCarriedWeaponMap.Contains(InWeaponTagToGet))
     {
-        if (AWarriorWeaponBase* const* FoundWeapon = CharacterCarriedWeaponMap.Find(InWeaponTagToGet))
+        if(AWarriorWeaponBase* const* FoundWeapon = CharacterCarriedWeaponMap.Find(InWeaponTagToGet))
         {
             return *FoundWeapon;
         }
@@ -42,7 +42,7 @@ AWarriorWeaponBase *UPawnCombatComponent::GetCharacterCarriedWeaponByTag(FGamepl
 
 AWarriorWeaponBase* UPawnCombatComponent::GetCharacterCurrentEquippedWeapon() const
 {
-    if (!CurrentEquippedWeaponTag.IsValid())
+    if(!CurrentEquippedWeaponTag.IsValid())
     {
         return nullptr;
     }
@@ -52,7 +52,7 @@ AWarriorWeaponBase* UPawnCombatComponent::GetCharacterCurrentEquippedWeapon() co
 
 void UPawnCombatComponent::ToggleWeaponCollision(bool bShouldEnable, EToggleDamageType ToggleDamageType)
 {
-    if (ToggleDamageType == EToggleDamageType::CurrentEquippedWeapon)
+    if(ToggleDamageType == EToggleDamageType::CurrentEquippedWeapon)
     {
         ToggleCurrentEquippedWeaponCollision(bShouldEnable);
     }
@@ -72,7 +72,7 @@ void UPawnCombatComponent::ToggleCurrentEquippedWeaponCollision(bool bShouldEnab
 
     check(WeaponToToggle);
 
-    if (bShouldEnable)
+    if(bShouldEnable)
     {
         WeaponToToggle->GetWeaponCollisionBox()->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
     }

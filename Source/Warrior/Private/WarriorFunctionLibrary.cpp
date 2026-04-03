@@ -27,7 +27,7 @@ void UWarriorFunctionLibrary::AddGameplayTagToActorIfNone(AActor *InActor, FGame
 {
     UWarriorAbilitySystemComponent* ASC = NativeGetWarriorASCFromActor(InActor);
 
-    if (!ASC->HasMatchingGameplayTag(TagToAdd))
+    if(!ASC->HasMatchingGameplayTag(TagToAdd))
     {
         ASC->AddLooseGameplayTag(TagToAdd);
     }
@@ -37,7 +37,7 @@ void UWarriorFunctionLibrary::RemoveGameplayTagFromActorIfFound(AActor *InActor,
 {
     UWarriorAbilitySystemComponent* ASC = NativeGetWarriorASCFromActor(InActor);
 
-    if (ASC->HasMatchingGameplayTag(TagToRemove))
+    if(ASC->HasMatchingGameplayTag(TagToRemove))
     {
         ASC->RemoveLooseGameplayTag(TagToRemove);
     }
@@ -52,7 +52,7 @@ UPawnCombatComponent* UWarriorFunctionLibrary::NativeGetPawnCombatComponentFromA
 {
     check(InActor);
 
-    if (IPawnCombatInterface* PawnCombatInterface = Cast<IPawnCombatInterface>(InActor))
+    if(IPawnCombatInterface* PawnCombatInterface = Cast<IPawnCombatInterface>(InActor))
     {
         return PawnCombatInterface->GetPawnCombatComponent();
     }
@@ -76,7 +76,7 @@ bool UWarriorFunctionLibrary::IsTargetPawnHostile(APawn* QueryPawn, APawn* Targe
     IGenericTeamAgentInterface* QueryTeamAgent = Cast<IGenericTeamAgentInterface>(QueryPawn->GetController());
     IGenericTeamAgentInterface* TargetTeamAgent = Cast<IGenericTeamAgentInterface>(TargetPawn->GetController());
 
-    if (QueryTeamAgent && TargetTeamAgent)
+    if(QueryTeamAgent && TargetTeamAgent)
     {
         return QueryTeamAgent->GetGenericTeamId() != TargetTeamAgent->GetGenericTeamId();
     }
@@ -102,20 +102,20 @@ FGameplayTag UWarriorFunctionLibrary::ComputeHitReactDirectionTag(AActor* InAtta
     const FVector CrossResult = FVector::CrossProduct(VictimForward,VictimToAttackerNormalized);
 
 
-    if (CrossResult.Z < 0.f)
+    if(CrossResult.Z < 0.f)
     {
         OutAngleDifference *= -1.f;
     }
 
-    if (OutAngleDifference>=-45.f && OutAngleDifference <=45.f)
+    if(OutAngleDifference>=-45.f && OutAngleDifference <=45.f)
     {
         return WarriorGameplayTags::Shared_Status_HitReact_Front;
     }
-    if (OutAngleDifference<-45.f && OutAngleDifference>=-135.f)
+    if(OutAngleDifference<-45.f && OutAngleDifference>=-135.f)
     {
         return WarriorGameplayTags::Shared_Status_HitReact_Left;
     }
-    else if (OutAngleDifference<-135.f || OutAngleDifference>135.f)
+    else if(OutAngleDifference<-135.f || OutAngleDifference>135.f)
     {
         return WarriorGameplayTags::Shared_Status_HitReact_Back;
     }

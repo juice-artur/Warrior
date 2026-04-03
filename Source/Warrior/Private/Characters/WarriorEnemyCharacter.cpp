@@ -50,7 +50,7 @@ void AWarriorEnemyCharacter::BeginPlay()
 {
     Super::BeginPlay();
 
-    if (UWarriorWidgetBase* HealthWidget = Cast<UWarriorWidgetBase>(EnemyHealthWidgetComponent->GetUserWidgetObject()))
+    if(UWarriorWidgetBase* HealthWidget = Cast<UWarriorWidgetBase>(EnemyHealthWidgetComponent->GetUserWidgetObject()))
     {
         HealthWidget->InitEnemyCreatedWidget(this);
     }
@@ -83,9 +83,9 @@ void AWarriorEnemyCharacter::OnBodyCollisionBoxBeginOverlap(
     UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep,
     const FHitResult& SweepResult)
 {
-    if (APawn* HitPawn = Cast<APawn>(OtherActor))
+    if(APawn* HitPawn = Cast<APawn>(OtherActor))
     {
-        if (UWarriorFunctionLibrary::IsTargetPawnHostile(this,HitPawn))
+        if(UWarriorFunctionLibrary::IsTargetPawnHostile(this,HitPawn))
         {
             EnemyCombatComponent->OnHitTargetActor(HitPawn);
         }
@@ -97,12 +97,12 @@ void AWarriorEnemyCharacter::PostEditChangeProperty(FPropertyChangedEvent& Prope
 {
     Super::PostEditChangeProperty(PropertyChangedEvent);
 
-    if (PropertyChangedEvent.GetMemberPropertyName() == GET_MEMBER_NAME_CHECKED(ThisClass, LeftHandCollisionBoxAttachBoneName))
+    if(PropertyChangedEvent.GetMemberPropertyName() == GET_MEMBER_NAME_CHECKED(ThisClass, LeftHandCollisionBoxAttachBoneName))
     {
         LeftHandCollisionBox->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, LeftHandCollisionBoxAttachBoneName);
     }
 
-    if (PropertyChangedEvent.GetMemberPropertyName() == GET_MEMBER_NAME_CHECKED(ThisClass, RightHandCollisionBoxAttachBoneName))
+    if(PropertyChangedEvent.GetMemberPropertyName() == GET_MEMBER_NAME_CHECKED(ThisClass, RightHandCollisionBoxAttachBoneName))
     {
         RightHandCollisionBox->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, RightHandCollisionBoxAttachBoneName);
     }
@@ -112,7 +112,7 @@ void AWarriorEnemyCharacter::PostEditChangeProperty(FPropertyChangedEvent& Prope
 
 void AWarriorEnemyCharacter::InitEnemyStartUpData()
 {
-    if (CharacterStartUpData.IsNull())
+    if(CharacterStartUpData.IsNull())
     {
         return;
     }
@@ -122,7 +122,7 @@ void AWarriorEnemyCharacter::InitEnemyStartUpData()
             FStreamableDelegate::CreateLambda([this]()
             {
                 UDataAsset_StartUpDataBase* LoadedData = CharacterStartUpData.Get();
-                if (LoadedData)
+                if(LoadedData)
                 {
                     LoadedData->GiveToAbilitySystemComponent(WarriorAbilitySystemComponent);
                 }

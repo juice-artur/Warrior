@@ -39,7 +39,7 @@ void AWarriorBaseCharacter::PossessedBy(AController *NewController)
 {
     Super::PossessedBy(NewController);
 
-    if (WarriorAbilitySystemComponent)
+    if(WarriorAbilitySystemComponent)
     {
         WarriorAbilitySystemComponent->InitAbilityActorInfo(this, this);
 

@@ -24,7 +24,7 @@ void UBTService_OrientToTargetActor::InitializeFromAsset(UBehaviorTree& Asset)
 {
     Super::InitializeFromAsset(Asset);
 
-    if (UBlackboardData* BBAsset = GetBlackboardAsset())
+    if(UBlackboardData* BBAsset = GetBlackboardAsset())
     {
         InTargetActorKey.ResolveSelectedKey(*BBAsset);
     }
@@ -47,7 +47,7 @@ void UBTService_OrientToTargetActor::TickNode(UBehaviorTreeComponent& OwnerComp,
 
     APawn* OwningPawn = OwnerComp.GetAIOwner()->GetPawn();
 
-    if (OwningPawn && TargetActor)
+    if(OwningPawn && TargetActor)
     {
         const FRotator LookAtRot = UKismetMathLibrary::FindLookAtRotation(OwningPawn->GetActorLocation(), TargetActor->GetActorLocation());
         const FRotator TargetRot = FMath::RInterpTo(OwningPawn->GetActorRotation(), LookAtRot,DeltaSeconds, RotationInterpSpeed);

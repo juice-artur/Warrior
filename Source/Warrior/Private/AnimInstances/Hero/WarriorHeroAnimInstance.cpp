@@ -10,7 +10,7 @@ void UWarriorHeroAnimInstance::NativeInitializeAnimation()
     Super::NativeInitializeAnimation();
 
 
-    if (OwningCharacter)
+    if(OwningCharacter)
     {
         OwningHeroCharacter = Cast<AWarriorHeroCharacter>(OwningCharacter);
     }
@@ -20,7 +20,7 @@ void UWarriorHeroAnimInstance::NativeThreadSafeUpdateAnimation(float DeltaSecond
 {
     Super::NativeThreadSafeUpdateAnimation(DeltaSeconds);
 
-    if (bHasAcceleration)
+    if(bHasAcceleration)
     {
         IdleElpasedTime = 0.f;
         bShouldEnterRelaxState = false;
