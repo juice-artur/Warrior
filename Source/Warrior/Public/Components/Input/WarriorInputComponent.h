@@ -29,9 +29,9 @@ public:
 
 template <class UserObject, typename CallbackFunc>
 inline void UWarriorInputComponent::BindNativeInputAction(const UDataAsset_InputConfig *InInputConfig,
-    const FGameplayTag &InInputTag,
+    const FGameplayTag& InInputTag,
     ETriggerEvent TriggerEvent,
-    UserObject *ContextObject,
+    UserObject* ContextObject,
     CallbackFunc Func)
 {
     checkf(InInputConfig, TEXT("Input config data asset is null,can not proceed with binding"));
