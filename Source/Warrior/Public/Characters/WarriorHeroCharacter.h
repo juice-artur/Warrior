@@ -28,6 +28,11 @@ public:
         return HeroCombatComponent;
     }
 
+    //~ Begin IPawnUIInterface Interface.
+    virtual UPawnUIComponent* GetPawnUIComponent() const override;
+    virtual UHeroUIComponent* GetHeroUIComponent() const override;
+    //~ End IPawnUIInterface Interface
+
 protected:
     virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
 	virtual void BeginPlay() override;
@@ -39,11 +44,6 @@ protected:
     //~ Begin PawnCombatInterface Interface.
     virtual UPawnCombatComponent* GetPawnCombatComponent() const override;
     //~ End PawnCombatInterface Interface
-
-    //~ Begin IPawnUIInterface Interface.
-    virtual UPawnUIComponent* GetPawnUIComponent() const override;
-    virtual UHeroUIComponent* GetHeroUIComponent() const override;
-    //~ End IPawnUIInterface Interface
 
 private:
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
