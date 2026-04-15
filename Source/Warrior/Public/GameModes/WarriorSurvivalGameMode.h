@@ -59,10 +59,15 @@ protected:
     virtual void Tick(float DeltaTime) override;
 
 private:
+    UFUNCTION()
+    void OnEnemyDestroyed(AActor* DestroyedActor);
+
     void SetCurrentSurvivalGameModeState(EWarriorSurvivalGameModeState InState);
     bool HasFinishedAllWaves() const;
     void PreLoadNextWaveEnemies();
     FWarriorEnemyWaveSpawnerTableRow* GetCurrentWaveSpawnerTableRow() const;
+    int32 TrySpawnWaveEnemies();
+    bool ShouldKeepSpawnEnemies() const;
 
 private:
     UPROPERTY()
@@ -79,6 +84,15 @@ private:
 
     UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = "WaveDefinition", meta = (AllowPrivateAccess = "true"))
     int32 CurrentWaveCount = 1;
+
+    UPROPERTY()
+    int32 CurrentSpawnedEnemiesCounter = 0;
+
+    UPROPERTY()
+    int32 TotalSpawnedEnemiesThisWaveCounter = 0;
+
+    UPROPERTY()
+    TArray<AActor*> TargetPointsArray;
 
     UPROPERTY()
     float TimePassedSinceStart = 0.f;
