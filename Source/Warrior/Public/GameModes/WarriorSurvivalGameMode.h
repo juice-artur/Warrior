@@ -54,6 +54,10 @@ class WARRIOR_API AWarriorSurvivalGameMode : public AWarriorBaseGameMode
 {
 	GENERATED_BODY()
 
+public:
+    UFUNCTION(BlueprintCallable)
+    void RegisterSpawnedEnemies(const TArray<AWarriorEnemyCharacter*>& InEnemiesToRegister);
+
 protected:
     virtual void BeginPlay() override;
     virtual void Tick(float DeltaTime) override;
@@ -100,7 +104,7 @@ private:
     UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "WaveDefinition", meta = (AllowPrivateAccess = "true"))
     float SpawnNewWaveWaitTime = 5.f;
 
-    UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "WaveDefinition", meta = (AllowPrivateAccess = "true"))
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "WaveDefinition", meta = (AllowPrivateAccess = "true"))
     float SpawnEnemiesDelayTime = 2.f;
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "WaveDefinition", meta = (AllowPrivateAccess = "true"))

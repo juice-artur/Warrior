@@ -9,6 +9,19 @@
 #include "Engine/TargetPoint.h"
 #include "Kismet/GameplayStatics.h"
 
+
+void AWarriorSurvivalGameMode::RegisterSpawnedEnemies(const TArray<AWarriorEnemyCharacter*>& InEnemiesToRegister)
+{
+    for (AWarriorEnemyCharacter* SpawnedEnemy : InEnemiesToRegister)
+    {
+        if (SpawnedEnemy)
+        {
+            CurrentSpawnedEnemiesCounter++;
+            SpawnedEnemy->OnDestroyed.AddUniqueDynamic(this, &ThisClass::OnEnemyDestroyed);
+        }
+    }
+}
+
 void AWarriorSurvivalGameMode::BeginPlay()
 {
     Super::BeginPlay();
